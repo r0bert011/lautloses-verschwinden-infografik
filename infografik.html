@@ -10,23 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- Chosen Palette: Erinnerung & Erosion -->
-    <!-- Application Structure Plan: Die SPA ist thematisch in sechs Hauptabschnitte gegliedert (Psyche, Umwelt, Kultur, Sprache, Technik, Wissen), die über eine sticky Navigation erreichbar sind. Diese Struktur bricht mit der linearen Form des Berichts, um eine explorative User Journey zu ermöglichen. Anstatt den Nutzer durch Kapitel zu führen, kann er frei zwischen den Kernthemen springen, die das Phänomen des "lautlosen Verschwindens" aus verschiedenen Blickwinkeln beleuchten. Jeder Abschnitt kombiniert zusammenfassenden Text mit interaktiven Visualisierungen (Charts, Diagramme, interaktive Tabellen), um die Kernkonzepte greifbar zu machen. Diese nicht-lineare, thematische Struktur wurde gewählt, um das Verständnis zu fördern und die komplexen Zusammenhänge intuitiv erfassbar zu machen. -->
-    <!-- Visualization & Content Choices: 
-        - Shifting Baseline (Umwelt): Ziel: Veränderung zeigen. Methode: Linien-Chart (Chart.js), um den divergierenden Trend von Realität und Wahrnehmung über die Zeit darzustellen. Begründung: Optimal für Zeitreihenvergleiche.
-        - Klimawandel-Wahrnehmung (Umwelt): Ziel: Vergleichen. Methode: Balken-Chart (Chart.js). Begründung: Klarer Vergleich zwischen zwei demografischen Gruppen.
-        - Wissensverlust (Wissen): Ziel: Anteil informieren. Methode: Donut-Chart (Chart.js). Begründung: Starke visuelle Wirkung für eine einzelne, dramatische Proportion (90% Verlust).
-        - Berufs-Wandel (Technik): Ziel: Vergleichen. Methode: Horizontales Balken-Chart (Chart.js). Begründung: Gut lesbarer Vergleich der prognostizierten Veränderungen für mehrere Kategorien.
-        - Konzepte (Psyche, Kultur): Ziel: Organisieren/Informieren. Methode: Diagramme aus HTML/CSS (Tailwind). Begründung: Klare, saubere Darstellung abstrakter Prozesse ohne verbotene SVGs/Mermaid.
-        - Sprachwandel (Sprache): Ziel: Organisieren. Methode: Interaktive HTML-Tabelle. Begründung: Ermöglicht dem Nutzer, tiefere Informationen bei Bedarf abzurufen, ohne die UI zu überladen.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
+    
     <style>
         body {
             font-family: 'Source Sans 3', sans-serif;
-            background-color: #F8F7F2; /* Warmes Off-White */
-            color: #403D39; /* Dunkles Grau */
+            background-color: #F8F7F2; 
+            color: #403D39; 
         }
         .chart-container {
             position: relative;
@@ -42,10 +31,10 @@
                 height: 350px;
             }
         }
-        .accent-color { color: #5B86A4; } /* Muted Blue */
+        .accent-color { color: #5B86A4; } 
         .accent-bg { background-color: #5B86A4; }
         .accent-border { border-color: #5B86A4; }
-        .secondary-accent-color { color: #C07B5F; } /* Warm Terracotta */
+        .secondary-accent-color { color: #C07B5F; } 
         .secondary-accent-bg { background-color: #C07B5F; }
         .nav-link {
             transition: color 0.3s, border-color 0.3s;
@@ -58,13 +47,11 @@
 </head>
 <body class="antialiased">
 
-    <!-- Header Section -->
     <header class="w-full h-screen flex flex-col justify-center items-center text-center p-8 bg-cover bg-center bg-fixed" style="background-image: linear-gradient(rgba(248, 247, 242, 0.6), rgba(248, 247, 242, 0.9)), url('https://images.unsplash.com/photo-1519922639349-882d903425d2?auto=format&fit=crop&w=1740&q=80');">
         <h1 class="text-4xl md:text-6xl font-bold accent-color mb-4">Das lautlose Verschwinden</h1>
         <p class="max-w-3xl text-lg md:text-xl text-gray-700">Eine interaktive Analyse unbemerkter Transformationen in Gesellschaft, Kultur und Umwelt. Entdecken Sie, was verloren geht, während wir nicht hinsehen.</p>
     </header>
 
-    <!-- Sticky Navigation -->
     <nav id="main-nav" class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-md">
         <div class="container mx-auto px-4">
             <div class="flex justify-center items-center h-16 space-x-4 md:space-x-8 overflow-x-auto">
@@ -80,7 +67,6 @@
 
     <main class="container mx-auto p-4 md:p-8">
 
-        <!-- Section 1: Psyche -->
         <section id="psyche" class="py-16">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Die Psychologie des Unbemerkten</h2>
             <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Unsere Wahrnehmung ist keine exakte Kopie der Realität. Das Gehirn füllt aktiv Lücken und normalisiert graduelle Veränderungen, um eine stabile Welt zu konstruieren. Dieser Mechanismus ist die Wurzel dafür, warum wir langsame Verluste oft nicht bemerken.</p>
@@ -109,7 +95,6 @@
             </div>
         </section>
 
-        <!-- Section 2: Umwelt -->
         <section id="umwelt" class="py-16">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Umwelt: Die verschobene Normalität</h2>
             <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Das "Shifting Baseline Syndrome" beschreibt, wie jede Generation eine degradierte Umwelt als normal akzeptiert. Die Erinnerung an eine gesündere Natur verblasst und mit ihr unser Maßstab für das, was wir verloren haben.</p>
@@ -144,7 +129,6 @@
             </div>
         </section>
 
-        <!-- Section 3: Kultur -->
         <section id="kultur" class="py-16">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Kultur: Der Wandel im Verborgenen</h2>
             <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Kulturelle Praktiken und soziale Normen können leise verblassen, wenn ihre soziale Funktion erodiert. Gleichzeitig können konstruierte Ideen so tief verankert werden, dass sie als "natürlich" gelten und Alternativen unsichtbar werden.</p>
@@ -181,7 +165,6 @@
             </div>
         </section>
 
-        <!-- Section 4: Sprache -->
         <section id="sprache" class="py-16">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Sprache: Verlorene Worte & neue Filter</h2>
             <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Sprache ist lebendig. Wörter verändern ihre Bedeutung oder verschwinden ganz. Gleichzeitig formen Algorithmen unsere digitale Kommunikation und filtern unbemerkt die Vielfalt der Perspektiven.</p>
@@ -215,7 +198,6 @@
             </div>
         </section>
 
-        <!-- Section 5: Technik -->
         <section id="technik" class="py-16">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Technik: Der stille Abschied</h2>
             <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Technologischer Fortschritt führt zur stillen Obsoleszenz von Alltagsgegenständen und Berufen. Sie werden nicht betrauert, sondern einfach durch effizientere Alternativen ersetzt und dann vergessen.</p>
@@ -243,7 +225,6 @@
             </div>
         </section>
 
-        <!-- Section 6: Wissen -->
         <section id="wissen" class="py-16">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Wissen: Vergessene Welten</h2>
             <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Der vielleicht tiefgreifendste Verlust ist der von Wissen. Ganze Bibliotheken sind verschwunden, einflussreiche Theorien in Vergessenheit geraten. Wir wissen oft nicht, was wir nicht mehr wissen.</p>
@@ -454,5 +435,5 @@
             sections.forEach(section => observer.observe(section));
         });
     </script>
-</html>
 </body>
+</html>

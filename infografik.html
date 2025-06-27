@@ -1,17 +1,32 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infografik: Das lautlose Verschwinden</title>
+    <title>Das Lautlose Verschwinden: Eine Interaktive Analyse</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Erinnerung & Erosion -->
+    <!-- Application Structure Plan: Die SPA ist thematisch in sechs Hauptabschnitte gegliedert (Psyche, Umwelt, Kultur, Sprache, Technik, Wissen), die über eine sticky Navigation erreichbar sind. Diese Struktur bricht mit der linearen Form des Berichts, um eine explorative User Journey zu ermöglichen. Anstatt den Nutzer durch Kapitel zu führen, kann er frei zwischen den Kernthemen springen, die das Phänomen des "lautlosen Verschwindens" aus verschiedenen Blickwinkeln beleuchten. Jeder Abschnitt kombiniert zusammenfassenden Text mit interaktiven Visualisierungen (Charts, Diagramme, interaktive Tabellen), um die Kernkonzepte greifbar zu machen. Diese nicht-lineare, thematische Struktur wurde gewählt, um das Verständnis zu fördern und die komplexen Zusammenhänge intuitiv erfassbar zu machen. -->
+    <!-- Visualization & Content Choices: 
+        - Shifting Baseline (Umwelt): Ziel: Veränderung zeigen. Methode: Linien-Chart (Chart.js), um den divergierenden Trend von Realität und Wahrnehmung über die Zeit darzustellen. Begründung: Optimal für Zeitreihenvergleiche.
+        - Klimawandel-Wahrnehmung (Umwelt): Ziel: Vergleichen. Methode: Balken-Chart (Chart.js). Begründung: Klarer Vergleich zwischen zwei demografischen Gruppen.
+        - Wissensverlust (Wissen): Ziel: Anteil informieren. Methode: Donut-Chart (Chart.js). Begründung: Starke visuelle Wirkung für eine einzelne, dramatische Proportion (90% Verlust).
+        - Berufs-Wandel (Technik): Ziel: Vergleichen. Methode: Horizontales Balken-Chart (Chart.js). Begründung: Gut lesbarer Vergleich der prognostizierten Veränderungen für mehrere Kategorien.
+        - Konzepte (Psyche, Kultur): Ziel: Organisieren/Informieren. Methode: Diagramme aus HTML/CSS (Tailwind). Begründung: Klare, saubere Darstellung abstrakter Prozesse ohne verbotene SVGs/Mermaid.
+        - Sprachwandel (Sprache): Ziel: Organisieren. Methode: Interaktive HTML-Tabelle. Begründung: Ermöglicht dem Nutzer, tiefere Informationen bei Bedarf abzurufen, ohne die UI zu überladen.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Source Sans 3', sans-serif;
+            background-color: #F8F7F2; /* Warmes Off-White */
+            color: #403D39; /* Dunkles Grau */
         }
         .chart-container {
             position: relative;
@@ -19,7 +34,7 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            height: 300px;
+            height: 320px;
             max-height: 400px;
         }
         @media (min-width: 768px) {
@@ -27,529 +42,417 @@
                 height: 350px;
             }
         }
-        .text-shadow {
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        .accent-color { color: #5B86A4; } /* Muted Blue */
+        .accent-bg { background-color: #5B86A4; }
+        .accent-border { border-color: #5B86A4; }
+        .secondary-accent-color { color: #C07B5F; } /* Warm Terracotta */
+        .secondary-accent-bg { background-color: #C07B5F; }
+        .nav-link {
+            transition: color 0.3s, border-color 0.3s;
         }
-        .loading-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #58508d;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .nav-link.active {
+            color: #5B86A4;
+            border-bottom-color: #5B86A4;
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="antialiased">
 
-    <div class="min-h-screen bg-cover bg-fixed bg-center" style="background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80');">
-        <div class="min-h-screen bg-black bg-opacity-60 flex flex-col justify-center items-center p-8 text-white">
-            <h1 class="text-5xl md:text-7xl font-black mb-4 text-center text-shadow">Das lautlose Verschwinden</h1>
-            <p class="text-xl md:text-2xl text-center max-w-3xl text-shadow">Eine visuelle Analyse unbemerkter Transformationen in Gesellschaft, Kultur und Umwelt.</p>
+    <!-- Header Section -->
+    <header class="w-full h-screen flex flex-col justify-center items-center text-center p-8 bg-cover bg-center bg-fixed" style="background-image: linear-gradient(rgba(248, 247, 242, 0.6), rgba(248, 247, 242, 0.9)), url('https://images.unsplash.com/photo-1519922639349-882d903425d2?auto=format&fit=crop&w=1740&q=80');">
+        <h1 class="text-4xl md:text-6xl font-bold accent-color mb-4">Das lautlose Verschwinden</h1>
+        <p class="max-w-3xl text-lg md:text-xl text-gray-700">Eine interaktive Analyse unbemerkter Transformationen in Gesellschaft, Kultur und Umwelt. Entdecken Sie, was verloren geht, während wir nicht hinsehen.</p>
+    </header>
+
+    <!-- Sticky Navigation -->
+    <nav id="main-nav" class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center items-center h-16 space-x-4 md:space-x-8 overflow-x-auto">
+                <a href="#psyche" class="nav-link text-gray-600 hover:accent-color font-semibold border-b-2 border-transparent pb-1">Psyche</a>
+                <a href="#umwelt" class="nav-link text-gray-600 hover:accent-color font-semibold border-b-2 border-transparent pb-1">Umwelt</a>
+                <a href="#kultur" class="nav-link text-gray-600 hover:accent-color font-semibold border-b-2 border-transparent pb-1">Kultur</a>
+                <a href="#sprache" class="nav-link text-gray-600 hover:accent-color font-semibold border-b-2 border-transparent pb-1">Sprache</a>
+                <a href="#technik" class="nav-link text-gray-600 hover:accent-color font-semibold border-b-2 border-transparent pb-1">Technik</a>
+                <a href="#wissen" class="nav-link text-gray-600 hover:accent-color font-semibold border-b-2 border-transparent pb-1">Wissen</a>
+            </div>
         </div>
-    </div>
+    </nav>
 
     <main class="container mx-auto p-4 md:p-8">
 
-        <section id="psychologie" class="my-16">
-            <h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;">Die Wurzel des Unbemerkten: Unser blindes Gehirn</h2>
-            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Unsere Wahrnehmung ist keine exakte Kopie der Realität. Das Gehirn füllt aktiv Lücken, normalisiert graduelle Veränderungen und schafft eine kohärente Welt, die uns oft blind macht für das, was langsam und leise verloren geht. Dieser kognitive Mechanismus ist die Grundlage für das Phänomen des unbemerkten Verschwindens.</p>
-            <div class="bg-white rounded-lg shadow-xl p-8 flex flex-col md:flex-row items-center justify-center gap-8">
-                <div class="flex-1 text-center">
-                    <h3 class="text-2xl font-bold mb-4" style="color: #58508d;">Das Prinzip der „Auffüllung“</h3>
-                    <p>Genau wie unser Gehirn den blinden Fleck im Auge nahtlos füllt, sodass wir kein Loch in unserem Sichtfeld sehen, kompensiert es auch langsam erodierende ökologische oder kulturelle Baselines. Wir bemerken den Verlust nicht, weil unsere Wahrnehmung darauf optimiert ist, eine stabile Realität zu konstruieren, nicht um subtile Verluste zu protokollieren.</p>
-                </div>
-                <div class="flex-1 flex justify-center items-center">
-                    <div class="relative w-64 h-64">
-                        <div class="absolute inset-0 border-4 border-dashed border-gray-300 rounded-full"></div>
-                        <div class="absolute w-full h-full animate-spin-slow flex justify-center items-center">
-                             <div class="w-8 h-8 rounded-full" style="background-color: #ff6361; transform: translate(0, -110px);"></div>
-                             <div class="w-8 h-8 rounded-full" style="background-color: #ffa600; transform: translate(110px, 0);"></div>
-                             <div class="w-8 h-8 rounded-full" style="background-color: #bc5090; transform: translate(0, 110px);"></div>
+        <!-- Section 1: Psyche -->
+        <section id="psyche" class="py-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Die Psychologie des Unbemerkten</h2>
+            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Unsere Wahrnehmung ist keine exakte Kopie der Realität. Das Gehirn füllt aktiv Lücken und normalisiert graduelle Veränderungen, um eine stabile Welt zu konstruieren. Dieser Mechanismus ist die Wurzel dafür, warum wir langsame Verluste oft nicht bemerken.</p>
+            
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-center mb-6 secondary-accent-color">Wie das Gehirn die Realität "auffüllt"</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="mb-4">Ein klassisches Beispiel ist der <strong class="font-semibold">blinde Fleck</strong> in unserem Auge. Obwohl dort keine Sehzellen sind, nehmen wir kein Loch wahr. Unser Gehirn nutzt Informationen aus der Umgebung, um die Lücke nahtlos zu füllen.</p>
+                        <p>Ähnlich werden langsame, graduelle Verluste in unserer Umwelt oder Kultur vom Gehirn kompensiert. Die Veränderung geschieht unterhalb unserer Wahrnehmungsschwelle, weil unser kognitives System auf Stabilität und nicht auf die Protokollierung schleichender Verluste optimiert ist.</p>
+                    </div>
+                    <div class="flex justify-center items-center p-4">
+                        <div class="relative w-64 h-48 border-2 accent-border border-dashed rounded-lg flex items-center justify-center p-4">
+                            <span class="text-lg font-semibold text-gray-500">Visuelles Feld</span>
+                            <div class="absolute w-16 h-16 bg-white rounded-full flex items-center justify-center" style="box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+                                <span class="text-3xl font-bold accent-color">?</span>
+                            </div>
+                            <div class="absolute top-4 right-4 text-xs text-gray-400">Blinder Fleck</div>
+                            <div class="absolute bottom-4 left-4 text-lg animate-pulse">✨</div>
+                            <div class="absolute bottom-1/2 left-8 text-lg animate-pulse">✨</div>
+                            <div class="absolute top-8 right-12 text-lg animate-pulse">✨</div>
+                            <p class="absolute bottom-2 text-xs text-center text-gray-500 w-full">Gehirn füllt Lücke mit umgebenden Mustern</p>
                         </div>
-                        <div class="absolute inset-10 bg-white rounded-full flex justify-center items-center">
-                            <span class="text-5xl font-bold" style="color: #003f5c;">?</span>
-                        </div>
-                         <div class="absolute w-8 h-8 rounded-full bg-gray-300" style="left: 50%; top:50%; transform: translate(-50%, -50%) translate(-110px, 0);"></div>
                     </div>
                 </div>
             </div>
-            <button class="mt-8 mx-auto block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('psychologie')">
-                Erweiterter Einblick ✨
-            </button>
-            <div id="psychologie-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"></div>
         </section>
 
-        <section id="umwelt" class="my-16">
-            <h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;">Die erodierende Erde: Das Shifting Baseline Syndrom</h2>
-            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Jede neue Generation akzeptiert eine degradierte Umwelt als „normal“. Die Erinnerung an eine reichere, gesündere Natur verblasst, und mit ihr unser Maßstab für das, was wir verloren haben. Dieses Phänomen ist eine der greifbarsten Formen des lautlosen Verschwindens.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-2xl font-bold mb-2 text-center" style="color: #58508d;">Generationen-Amnesie: Fischbestände</h3>
-                    <p class="text-center mb-4 text-sm">Ältere Generationen erinnern sich an eine Fülle, die für Jüngere unvorstellbar ist. Die „Baseline“ für einen gesunden Fischbestand verschiebt sich mit jeder Generation nach unten.</p>
+        <!-- Section 2: Umwelt -->
+        <section id="umwelt" class="py-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Umwelt: Die verschobene Normalität</h2>
+            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Das "Shifting Baseline Syndrome" beschreibt, wie jede Generation eine degradierte Umwelt als normal akzeptiert. Die Erinnerung an eine gesündere Natur verblasst und mit ihr unser Maßstab für das, was wir verloren haben.</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-2 secondary-accent-color">Generationen-Amnesie: Fischbestände</h3>
+                    <p class="text-center text-sm mb-4">Dieses Diagramm zeigt, wie der tatsächliche Fischbestand über Jahrzehnte abnimmt, während die von jeder neuen Generation als "normal" empfundene Baseline ebenfalls sinkt. Der wahrgenommene Verlust wird dadurch kleiner als der tatsächliche.</p>
                     <div class="chart-container">
                         <canvas id="shiftingBaselineChart"></canvas>
                     </div>
                 </div>
-                 <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-center items-center">
-                    <h3 class="text-2xl font-bold mb-2 text-center" style="color: #58508d;">Funktionell ausgestorben</h3>
-                    <p class="text-center mb-4 text-sm">Ein dramatisches Beispiel für eine verschobene Wahrnehmung: Die Bisons wurden aus fast ihrem gesamten Lebensraum verdrängt, doch ihre Rettung vor der kompletten Ausrottung wird heute als großer Erfolg gefeiert.</p>
-                    <div class="text-center">
-                        <p class="text-8xl font-black" style="color: #ff6361;">98%</p>
-                        <p class="text-lg font-bold">ihres historischen Verbreitungsgebiets haben die Bisons in Nordamerika verloren.</p>
-                    </div>
-                </div>
-                <div class="md:col-span-2 bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-2xl font-bold mb-2 text-center" style="color: #58508d;">Wahrnehmung von Wandel</h3>
-                     <p class="text-center mb-4 text-sm">Studien zeigen, dass ältere Generationen, die mehr Veränderungen miterlebt haben, Umweltprobleme wie den Klimawandel signifikant stärker wahrnehmen als jüngere Generationen.</p>
-                    <div class="chart-container h-80 max-h-80">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-2 secondary-accent-color">Wahrnehmung des Klimawandels</h3>
+                     <p class="text-center text-sm mb-4">Ältere Generationen, die mehr Wandel miterlebt haben, nehmen Umweltveränderungen oft stärker wahr. Jüngere Generationen wachsen in einer bereits veränderten Welt auf, die für sie die Norm darstellt.</p>
+                    <div class="chart-container">
                          <canvas id="perceptionChart"></canvas>
                     </div>
                 </div>
+                 <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-center items-center text-center">
+                        <h3 class="text-xl font-bold mb-2 secondary-accent-color">Verlust des Lebensraums</h3>
+                        <p class="text-9xl font-bold accent-color">98%</p>
+                        <p class="mt-2">haben die Bisons in Nordamerika von ihrem historischen Verbreitungsgebiet verloren. Die Rettung der verbleibenden 2% wird als Erfolg gefeiert – ein klassisches Beispiel für eine gesenkte Erwartungshaltung.</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-center items-center text-center">
+                        <h3 class="text-xl font-bold mb-2 secondary-accent-color">Vergessene Landschaften</h3>
+                        <p class="text-6xl mb-4">🌲➡️🌳</p>
+                        <p class="mt-2">Im Great Basin (USA) verdrängten Wälder durch Feuerunterdrückung die ursprüngliche Salbeibusch-Landschaft. Heute werden die Wälder als "normal" angesehen, und die Erinnerung an die offene Steppe ist verblasst.</p>
+                    </div>
+                </div>
             </div>
-            <button class="mt-8 mx-auto block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('umwelt')">
-                Erweiterter Einblick ✨
-            </button>
-            <div id="umwelt-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"></div>
         </section>
 
-        <section id="kultur" class="my-16">
-            <h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;">Verblassende Bräuche & Konzepte</h2>
-            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Kulturelle Praktiken, soziale Normen und sogar grundlegende gesellschaftliche Ideen können leise verschwinden. Sie verlieren ihre Relevanz, werden durch neue ersetzt oder als so „natürlich“ angesehen, dass Alternativen undenkbar werden.</p>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                <div class="bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-2xl font-bold text-center mb-6" style="color: #58508d;">Die stille Ablösung der Tradition</h3>
-                    <p class="text-center mb-6 text-sm">Historische Bräuche verschwinden nicht plötzlich. Ihre soziale Funktion erodiert langsam, bis die Praxis selbst nur noch eine leere Hülle ist, die stillschweigend aufgegeben wird.</p>
-                    <div class="relative pl-8">
-                        <div class="absolute left-4 top-0 bottom-0 w-1 bg-gray-200 rounded"></div>
+        <!-- Section 3: Kultur -->
+        <section id="kultur" class="py-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Kultur: Der Wandel im Verborgenen</h2>
+            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Kulturelle Praktiken und soziale Normen können leise verblassen, wenn ihre soziale Funktion erodiert. Gleichzeitig können konstruierte Ideen so tief verankert werden, dass sie als "natürlich" gelten und Alternativen unsichtbar werden.</p>
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-6 secondary-accent-color">Die stille Ablösung der Tradition</h3>
+                    <div class="relative pl-6 border-l-2 accent-border">
                         <div class="mb-8 relative">
-                            <div class="absolute left-[-22px] top-1 w-6 h-6 rounded-full" style="background-color: #bc5090;"></div>
-                            <h4 class="font-bold text-lg">Gemeinschaftsrituale</h4>
-                            <p class="text-sm">Bräuche wie das „Kalkspur-Legen“, die soziale Normen regelten, verloren mit der Veränderung von Partnerschaftsidealen ihre Berechtigung und verschwanden.</p>
-                        </div>
-                        <div class="mb-8 relative">
-                            <div class="absolute left-[-22px] top-1 w-6 h-6 rounded-full" style="background-color: #ff6361;"></div>
-                            <h4 class="font-bold text-lg">Weihnachtssymbole</h4>
-                            <p class="text-sm">Die Weihnachtskrippe wurde über Jahrzehnte langsam durch den Christbaum als zentrales Symbol im häuslichen Weihnachtsfest abgelöst.</p>
+                            <div class="absolute -left-[34px] top-1 w-4 h-4 rounded-full accent-bg ring-4 ring-white"></div>
+                            <h4 class="font-bold">Erosion der Bedeutung</h4>
+                            <p class="text-sm">Der Brauch des "Kalkspur-Legens", der einst soziale Normen in Partnerschaften regulierte, verlor mit gewandelten gesellschaftlichen Werten seine Funktion und verschwand.</p>
                         </div>
                         <div class="relative">
-                           <div class="absolute left-[-22px] top-1 w-6 h-6 rounded-full" style="background-color: #ffa600;"></div>
-                            <h4 class="font-bold text-lg">Importierte Bräuche</h4>
-                            <p class="text-sm">Neue Bräuche wie der Valentinstag haben es schwer, sich zu etablieren, da ihnen die tief verwurzelte, über Generationen gewachsene Bedeutung fehlt.</p>
+                            <div class="absolute -left-[34px] top-1 w-4 h-4 rounded-full accent-bg ring-4 ring-white"></div>
+                            <h4 class="font-bold">Symbolische Verdrängung</h4>
+                            <p class="text-sm">Die Weihnachtskrippe wurde über Jahrzehnte langsam durch den Christbaum als zentrales häusliches Symbol ersetzt, was einen Wandel in der Feierkultur widerspiegelt.</p>
                         </div>
                     </div>
                 </div>
-                 <div class="bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-2xl font-bold text-center mb-6" style="color: #58508d;">Die Naturalisierung von Ideen</h3>
-                    <p class="text-center mb-6 text-sm">Wenn ein soziales Konstrukt als „natürlich“ gilt, verschwinden alternative Denkweisen unbemerkt aus dem kollektiven Bewusstsein.</p>
-                    <div class="text-center p-4 border-4 border-dashed rounded-lg" style="border-color: #003f5c;">
-                         <p class="font-bold mb-2">Gesellschaftliche Realität</p>
-                        <div class="p-4 bg-gray-200 rounded-lg">
-                             <p class="font-bold mb-2 text-gray-700">Akzeptierte Norm (z.B. binäres Geschlechtermodell)</p>
-                             <div class="p-4 rounded-lg" style="background-color: #003f5c; color: white;">
-                                <p class="font-bold">„Das ist natürlich!“</p>
-                             </div>
-                             <div class="p-4 mt-2 bg-red-100 text-red-800 rounded-lg opacity-30">
-                                <p class="font-bold line-through">Alternative Möglichkeiten & historische Vielfalt</p>
-                                <p class="text-xs">(werden unsichtbar gemacht)</p>
-                            </div>
+                 <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-6 secondary-accent-color">Die "Naturalisierung" von Ideen</h3>
+                    <p class="text-center text-sm mb-4">Wenn ein soziales Konstrukt als "natürlich" dargestellt wird, verschwinden alternative Denkweisen aus dem kollektiven Bewusstsein.</p>
+                    <div class="flex flex-col items-center gap-2 text-center">
+                        <div class="p-3 bg-gray-100 rounded-lg w-full">Historische & Kulturelle Vielfalt</div>
+                        <div class="text-2xl secondary-accent-color">⬇️</div>
+                        <div class="p-3 accent-bg text-white rounded-lg font-bold w-full">Dominantes Modell (z.B. Binäres Geschlecht)</div>
+                        <div class="text-2xl secondary-accent-color">⬇️</div>
+                        <div class="p-3 border-2 border-dashed accent-border rounded-lg w-full">
+                            Wird als "Natürlich & Gegeben" wahrgenommen
+                            <div class="mt-2 text-sm text-gray-500 line-through">Alternative Realitäten werden unsichtbar</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="flex justify-center gap-4 mt-8">
-                <button class="block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('kultur')">
-                    Erweiterter Einblick ✨
-                </button>
-                <button class="block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getReviveCustom()">
-                    Brauch wiederbeleben ✨
-                </button>
-            </div>
-            <div id="kultur-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"></div>
-            <div id="revive-custom-output" class="mt-4 p-4 bg-green-50 rounded-lg border border-green-200 text-green-900 hidden"></div>
         </section>
 
-        <section id="sprache" class="my-16">
-            <h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;">Wenn Worte verstummen</h2>
-            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Sprache ist im stetigen Wandel. Wörter verlieren ihre ursprüngliche Bedeutung oder verschwinden ganz aus unserem Wortschatz. Gleichzeitig filtern digitale Medien unsere Informationswelt und lassen vielfältige Perspektiven unbemerkt verschwinden.</p>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                <div class="bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-2xl font-bold mb-4 text-center" style="color: #58508d;">Der Wandel der Wörter</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-sm text-left">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                                <tr>
-                                    <th scope="col" class="px-4 py-2">Wort</th>
-                                    <th scope="col" class="px-4 py-2">Früher</th>
-                                    <th scope="col" class="px-4 py-2">Heute</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="bg-white border-b">
-                                    <td class="px-4 py-2 font-medium">Bauchpinseln</td>
-                                    <td class="px-4 py-2">Bauch eines Tieres streicheln</td>
-                                    <td class="px-4 py-2">Jemandem schmeicheln</td>
-                                </tr>
-                                <tr class="bg-gray-50 border-b">
-                                    <td class="px-4 py-2 font-medium">Kamelle</td>
-                                    <td class="px-4 py-2">Alte Kamillenblüten</td>
-                                    <td class="px-4 py-2">Alte, oft erzählte Geschichten</td>
-                                </tr>
-                                <tr class="bg-white border-b">
-                                    <td class="px-4 py-2 font-medium">Abkupfern</td>
-                                    <td class="px-4 py-2">Kunstwerk exakt kopieren</td>
-                                    <td class="px-4 py-2">Ein Plagiat anfertigen</td>
-                                </tr>
-                            </tbody>
-                        </table>
+        <!-- Section 4: Sprache -->
+        <section id="sprache" class="py-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Sprache: Verlorene Worte & neue Filter</h2>
+            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Sprache ist lebendig. Wörter verändern ihre Bedeutung oder verschwinden ganz. Gleichzeitig formen Algorithmen unsere digitale Kommunikation und filtern unbemerkt die Vielfalt der Perspektiven.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-4 secondary-accent-color">Der Wandel der Wörter</h3>
+                    <p class="text-center text-sm mb-4">Einige Wörter haben ihre Bedeutung so sehr verändert, dass ihre ursprüngliche Herkunft kaum noch erkennbar ist. Entdecken Sie die Evolution mit einem Klick.</p>
+                    <div id="word-table-interactive" class="space-y-2">
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-2xl font-bold mb-4 text-center" style="color: #58508d;">Die algorithmische Filterblase</h3>
-                    <p class="text-center mb-4 text-sm">Soziale Medien und Suchmaschinen personalisieren unseren Informationsfluss. Was nicht zu unserem Profil passt, wird unsichtbar – und wir bemerken das Verschwinden der Meinungsvielfalt nicht.</p>
-                    <div class="flex flex-col items-center gap-2">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-4 secondary-accent-color">Die algorithmische Filterblase</h3>
+                    <p class="text-center text-sm mb-4">Digitale Plattformen zeigen uns, was wir sehen wollen. Das führt unbemerkt zur Erosion einer gemeinsamen Faktenbasis und vielfältiger Perspektiven.</p>
+                    <div class="flex items-center justify-center gap-4">
                         <div class="text-center">
-                            <span class="font-bold">Gesamte Information</span><br>
-                            <span style="font-size: 2rem; line-height: 1;">🌍</span>
+                            <div class="text-4xl">🌍</div>
+                            <div class="text-sm font-semibold">Alle Infos</div>
                         </div>
-                        <div class="w-2 h-8" style="background-color: #003f5c;"></div>
-                        <div class="p-3 rounded-lg border-2 border-dashed w-full text-center" style="border-color: #ff6361;">
-                            <span class="font-bold">Algorithmische Filter</span><br>
-                            <span class="text-xs">(Personalisierung, Engagement)</span>
+                        <div class="text-4xl accent-color font-bold">→</div>
+                        <div class="text-center p-4 border-2 border-dashed secondary-accent-border rounded-full">
+                             <div class="text-4xl">⚙️</div>
+                             <div class="text-sm font-semibold">Algorithmus</div>
                         </div>
-                        <div class="w-2 h-8" style="background-color: #003f5c;"></div>
-                         <div class="p-3 rounded-full text-center" style="background-color: #bc5090; color: white;">
-                             <span class="font-bold">Deine persönliche Echokammer</span><br>
-                             <span style="font-size: 2rem; line-height: 1;">👤</span>
+                        <div class="text-4xl accent-color font-bold">→</div>
+                         <div class="text-center">
+                             <div class="text-4xl">👤</div>
+                             <div class="text-sm font-semibold">Deine Blase</div>
                          </div>
                     </div>
                 </div>
             </div>
-            <div class="flex justify-center gap-4 mt-8">
-                <button class="block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('sprache')">
-                    Erweiterter Einblick ✨
-                </button>
-                <button class="block bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getMoreWords()">
-                    Weitere Wortwandlungen ✨
-                </button>
-            </div>
-            <div id="sprache-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"></div>
-            <div id="more-words-output" class="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200 text-yellow-900 hidden"></div>
         </section>
 
-        <section id="technologie" class="my-16">
-            <h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;">Geister der Technik & Arbeit</h2>
-            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Der technologische Fortschritt ist ein Motor des stillen Verschwindens. Alltagsgegenstände werden obsolet und ganze Berufsbilder erodieren langsam durch Automatisierung und KI, oft ohne dass wir den strukturellen Wandel bemerken.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                 <div class="md:col-span-2 bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-2xl font-bold mb-4 text-center" style="color: #58508d;">Friedhof der Alltagsgegenstände</h3>
-                     <p class="text-center mb-6 text-sm">Erinnern Sie sich an diese Geräusche und Handgriffe? Sie sind leise aus unserem Alltag verschwunden, ersetzt durch effizientere, stillere Technologien.</p>
-                    <div class="flex justify-around items-center text-5xl md:text-7xl text-center flex-wrap gap-6">
-                        <div style="color: #003f5c;">📼<p class="text-sm font-bold">Bandsalat</p></div>
-                        <div style="color: #58508d;">📞<p class="text-sm font-bold">Wählscheibe</p></div>
-                        <div style="color: #bc5090;">💾<p class="text-sm font-bold">Diskette</p></div>
-                        <div style="color: #ff6361;">☎️<p class="text-sm font-bold">Telefonzelle</p></div>
-                        <div style="color: #ffa600;">📠<p class="text-sm font-bold">Modemgeräusch</p></div>
-                    </div>
+        <!-- Section 5: Technik -->
+        <section id="technik" class="py-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Technik: Der stille Abschied</h2>
+            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Technologischer Fortschritt führt zur stillen Obsoleszenz von Alltagsgegenständen und Berufen. Sie werden nicht betrauert, sondern einfach durch effizientere Alternativen ersetzt und dann vergessen.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                     <h3 class="text-xl font-bold text-center mb-6 secondary-accent-color">Friedhof der Alltagsgegenstände</h3>
+                     <div class="grid grid-cols-3 md:grid-cols-4 gap-4 text-center">
+                        <div class="p-2"><span class="text-5xl" title="Videokassette">📼</span></div>
+                        <div class="p-2"><span class="text-5xl" title="Walkman">🎧</span></div>
+                        <div class="p-2"><span class="text-5xl" title="Telefonzelle">☎️</span></div>
+                        <div class="p-2"><span class="text-5xl" title="Diskette">💾</span></div>
+                        <div class="p-2"><span class="text-5xl" title="Festnetztelefon">📞</span></div>
+                        <div class="p-2"><span class="text-5xl" title="Rollschuhe">⛸️</span></div>
+                        <div class="p-2"><span class="text-5xl" title="Parkuhr">🅿️</span></div>
+                        <div class="p-2"><span class="text-5xl" title="Modemgeräusch">🔊</span></div>
+                     </div>
                 </div>
-                <div class="md:col-span-2 bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-2xl font-bold mb-2 text-center" style="color: #58508d;">Die stille Erosion der Berufe</h3>
-                    <p class="text-center mb-4 text-sm">Automatisierung ersetzt nicht über Nacht ganze Berufsstände, sondern übernimmt schleichend einzelne Aufgaben. Der Bedarf an bestimmten menschlichen Tätigkeiten sinkt graduell, bis ganze Berufsbilder unbemerkt verschwunden sind.</p>
-                    <div class="chart-container h-96 max-h-96">
+                 <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-2 secondary-accent-color">Die stille Erosion der Berufe</h3>
+                    <p class="text-center text-sm mb-4">KI und Automatisierung ersetzen nicht plötzlich ganze Berufsstände, sondern übernehmen schleichend einzelne Aufgaben, bis der Bedarf an menschlicher Arbeit unbemerkt sinkt.</p>
+                    <div class="chart-container" style="height: 280px;">
                         <canvas id="jobShiftChart"></canvas>
                     </div>
                 </div>
             </div>
-            <button class="mt-8 mx-auto block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('technologie')">
-                Erweiterter Einblick ✨
-            </button>
-            <div id="technologie-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"></div>
         </section>
-        
-        <section id="wissen" class="my-16">
-            <h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;">Verlorene Archive & vergessene Ideen</h2>
-            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Die vielleicht tiefgreifendste Form des Verschwindens ist der Verlust von Wissen. Ganze Bibliotheken der Antike sind verloren, einflussreiche Theorien geraten in Vergessenheit und unsere intellektuelle „Baseline“ sinkt, ohne dass wir wissen, was wir nicht mehr wissen.</p>
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-2xl font-bold mb-2 text-center" style="color: #58508d;">Die Asche der Antike</h3>
-                    <p class="text-center mb-4 text-sm">Ein unvorstellbarer Schatz an Literatur, Wissenschaft und Philosophie ging in der Spätantike verloren. Wir kennen heute nur einen winzigen Bruchteil des antiken Wissens.</p>
-                    <div class="chart-container h-80 max-h-80">
+
+        <!-- Section 6: Wissen -->
+        <section id="wissen" class="py-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 accent-color">Wissen: Vergessene Welten</h2>
+            <p class="max-w-3xl mx-auto text-center mb-12 text-lg">Der vielleicht tiefgreifendste Verlust ist der von Wissen. Ganze Bibliotheken sind verschwunden, einflussreiche Theorien in Vergessenheit geraten. Wir wissen oft nicht, was wir nicht mehr wissen.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center">
+                    <h3 class="text-xl font-bold text-center mb-4 secondary-accent-color">Verlust antiker Literatur</h3>
+                    <p class="text-center text-sm mb-4">Schätzungen zufolge ist nur ein Bruchteil der griechischen und lateinischen Literatur der Antike bis heute erhalten geblieben.</p>
+                    <div class="chart-container" style="height: 250px;">
                         <canvas id="knowledgeLossChart"></canvas>
                     </div>
                 </div>
-                 <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-center items-center text-center">
-                    <h3 class="text-2xl font-bold mb-4" style="color: #58508d;">Vergessene Vordenker</h3>
-                    <p class="mb-4">Ideen verschwinden nicht, weil sie schlecht sind, sondern weil sie von dominanten Narrativen überschattet oder aktiv marginalisiert werden.</p>
-                    <div class="space-y-4">
-                        <div class="p-4 rounded-lg border" style="border-color: #ff6361;">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-4 secondary-accent-color">Vergessene Vordenker</h3>
+                    <p class="text-center text-sm mb-4">Einflussreiche Ideen können aus dem Diskurs verschwinden, wenn sie von dominanten Narrativen überschattet oder aktiv marginalisiert werden.</p>
+                    <div class="space-y-4 mt-6">
+                        <div class="p-4 rounded-lg border-l-4 accent-border bg-gray-50">
                             <h4 class="font-bold">Walter Lippmann</h4>
-                            <p class="text-sm">Seine Ideen zur medialen Konstruktion der Realität („Pseudo-Umwelt“) sind heute weitgehend unbekannt.</p>
+                            <p class="text-sm">Seine Theorien zur medialen Konstruktion der Realität ("Pseudo-Umwelt") wurden von anderen Denkern überschattet und sind heute kaum bekannt.</p>
                         </div>
-                        <div class="p-4 rounded-lg border" style="border-color: #ffa600;">
+                         <div class="p-4 rounded-lg border-l-4 secondary-accent-border bg-gray-50">
                             <h4 class="font-bold">Die Saint-Simonistinnen</h4>
-                             <p class="text-sm">Eine frühe autonome Frauenbewegung des 19. Jh., die für finanzielle Unabhängigkeit kämpfte und von Marx als „utopisch“ abgetan wurde.</p>
+                            <p class="text-sm">Eine frühe autonome Frauenbewegung, die von Marx als "utopisch" abgetan und dadurch aus der sozialistischen Geschichtsschreibung verdrängt wurde.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <button class="mt-8 mx-auto block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('wissen')">
-                Erweiterter Einblick ✨
-            </button>
-            <div id="wissen-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"></div>
         </section>
+
     </main>
 
-    <footer class="bg-gray-800 text-white p-12 mt-16">
+    <footer class="bg-[#403D39] text-gray-200 p-8 mt-16">
         <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-4">Das Unsichtbare sichtbar machen</h2>
-            <p class="max-w-2xl mx-auto mb-6">Das lautlose Verschwinden ist kein Schicksal. Es ist die Summe kleiner, unbemerkter Veränderungen. Indem wir lernen, genauer hinzusehen, unser kollektives Gedächtnis pflegen und unsere Wahrnehmung schärfen, können wir den stillen Erosionen entgegenwirken.</p>
-            <div class="flex justify-center gap-8 font-bold text-lg">
-                <span style="color: #bc5090;">Beobachten.</span>
-                <span style="color: #ff6361;">Erinnern.</span>
-                <span style="color: #ffa600;">Handeln.</span>
-            </div>
+            <h2 class="text-2xl font-bold mb-4">Das Unsichtbare sichtbar machen</h2>
+            <p class="max-w-2xl mx-auto text-gray-400">Das lautlose Verschwinden ist kein Schicksal. Es ist die Summe kleiner, unbemerkter Veränderungen. Indem wir lernen, genauer hinzusehen und unser kollektives Gedächtnis zu pflegen, können wir den stillen Erosionen entgegenwirken.</p>
         </div>
     </footer>
 
-
     <script>
-        const vibrantPalette = ['#003f5c', '#58508d', '#bc5090', '#ff6361', '#ffa600'];
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const accentColor = '#5B86A4';
+            const secondaryAccentColor = '#C07B5F';
+            const textColor = '#403D39';
 
-        const wrapLabel = (str, maxWidth) => {
-            if (str.length <= maxWidth) {
-                return str;
-            }
-            const words = str.split(' ');
-            let lines = [];
-            let currentLine = words[0];
-
-            for (let i = 1; i < words.length; i++) {
-                if (currentLine.length + words[i].length + 1 < maxWidth) {
-                    currentLine += ' ' + words[i];
-                } else {
-                    lines.push(currentLine);
-                    currentLine = words[i];
-                }
-            }
-            lines.push(currentLine);
-            return lines;
-        };
-        
-        const tooltipTitleCallback = (tooltipItems) => {
-            const item = tooltipItems[0];
-            let label = item.chart.data.labels[item.dataIndex];
-            if (Array.isArray(label)) {
-              return label.join(' ');
-            } else {
-              return label;
-            }
-        };
-
-        const defaultChartOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        title: tooltipTitleCallback
+            const wrapLabel = (str, maxWidth = 16) => {
+                if (!str) return '';
+                if (str.length <= maxWidth) return str;
+                const words = str.split(' ');
+                const lines = [];
+                let currentLine = words[0];
+                for (let i = 1; i < words.length; i++) {
+                    if (currentLine.length + words[i].length + 1 < maxWidth) {
+                        currentLine += ' ' + words[i];
+                    } else {
+                        lines.push(currentLine);
+                        currentLine = words[i];
                     }
                 }
-            }
-        };
+                lines.push(currentLine);
+                return lines;
+            };
+            
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                return Array.isArray(label) ? label.join(' ') : label;
+            };
 
-        const sbsCtx = document.getElementById('shiftingBaselineChart');
-        if (sbsCtx) {
-            new Chart(sbsCtx, {
-                type: 'line',
-                data: {
-                    labels: ['1950er', '1980er', '2010er', 'Heute'],
-                    datasets: [
-                        {
-                            label: 'Tatsächlicher Fischbestand',
-                            data: [100, 60, 30, 20],
-                            borderColor: vibrantPalette[0],
-                            backgroundColor: vibrantPalette[0] + '33',
-                            fill: true,
-                            tension: 0.1
-                        },
-                        {
-                            label: 'Wahrgenommene "Normale" Baseline',
-                            data: [100, 100, 60, 30],
-                            borderColor: vibrantPalette[3],
-                            borderDash: [5, 5],
-                            fill: false
-                        }
-                    ]
-                },
-                options: { ...defaultChartOptions,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: 'Bestandsindex' }
-                        }
+            const defaultChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: textColor }
+                    },
+                    tooltip: {
+                        callbacks: { title: tooltipTitleCallback }
                     }
-                }
-            });
-        }
-        
-        const perceptionCtx = document.getElementById('perceptionChart');
-        if (perceptionCtx) {
-            new Chart(perceptionCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Erhöhte Temperaturen', 'Verringerte Schneedecke', 'Rückgang der Artenvielfalt'],
-                    datasets: [
-                        {
-                            label: 'Wahrnehmung Älterer Generationen',
-                            data: [90, 85, 75],
-                            backgroundColor: vibrantPalette[1],
-                        },
-                        {
-                            label: 'Wahrnehmung Jüngerer Generationen',
-                            data: [65, 55, 50],
-                            backgroundColor: vibrantPalette[2],
-                        }
-                    ]
                 },
-                options: { ...defaultChartOptions,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            title: { display: true, text: '% der Befragten, die Veränderung bemerken' }
-                        }
-                    }
+                scales: {
+                    x: { ticks: { color: textColor }, grid: { display: false } },
+                    y: { ticks: { color: textColor }, grid: { color: '#e0e0e0' } }
                 }
-            });
-        }
-        
-        const jobShiftCtx = document.getElementById('jobShiftChart');
-        if (jobShiftCtx) {
-            const originalLabels = ['Sekretariat & Verwaltung', 'Übersetzung & Recherche', 'Fertigung & Routinearbeit', 'Transport & Logistik', 'KI & Automatisierungs-Spezialisten'];
-            new Chart(jobShiftCtx, {
-                type: 'bar',
-                data: {
-                    labels: originalLabels.map(l => wrapLabel(l, 16)),
-                    datasets: [
-                        {
-                            label: 'Bedarf 2020',
-                            data: [80, 70, 90, 85, 20],
-                            backgroundColor: vibrantPalette[0],
-                        },
-                        {
-                            label: 'Prognose 2035',
-                            data: [30, 20, 40, 50, 95],
-                            backgroundColor: vibrantPalette[4],
-                        }
-                    ]
-                },
-                options: { ...defaultChartOptions,
-                    indexAxis: 'y',
-                     scales: {
-                        x: {
-                            title: { display: true, text: 'Relativer Bedarf an Arbeitskräften' }
-                        }
-                    }
-                }
-            });
-        }
-        
-        const knowledgeLossCtx = document.getElementById('knowledgeLossChart');
-        if(knowledgeLossCtx) {
-            new Chart(knowledgeLossCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Verlorenes Wissen der Antike', 'Überliefertes Wissen'],
-                    datasets: [{
-                        data: [90, 10],
-                        backgroundColor: [
-                            vibrantPalette[3],
-                            vibrantPalette[0],
-                        ],
-                        borderColor: '#fff',
-                        borderWidth: 4
-                    }]
-                },
-                options: { ...defaultChartOptions,
-                     cutout: '60%',
-                }
-            });
-        }
-
-        async function generateGeminiContent(prompt, outputElementId) {
-            const outputDiv = document.getElementById(outputElementId);
-            outputDiv.classList.remove('hidden');
-            outputDiv.innerHTML = '<div class="flex items-center justify-center p-4"><div class="loading-spinner"></div><span class="ml-2 text-gray-700">Inhalt wird generiert...</span></div>';
-
-            try {
-                let chatHistory = [];
-                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                const payload = { contents: chatHistory };
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+            };
+            
+            const sbsCtx = document.getElementById('shiftingBaselineChart');
+            if (sbsCtx) {
+                new Chart(sbsCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['1950er', '1980er', '2010er', 'Heute'],
+                        datasets: [
+                            {
+                                label: 'Tatsächlicher Bestand',
+                                data: [100, 60, 30, 20],
+                                borderColor: accentColor,
+                                backgroundColor: 'rgba(91, 134, 164, 0.2)',
+                                fill: true,
+                                tension: 0.1
+                            },
+                            {
+                                label: 'Wahrgenommene "Norm"',
+                                data: [100, 100, 60, 30],
+                                borderColor: secondaryAccentColor,
+                                borderDash: [5, 5],
+                                fill: false
+                            }
+                        ]
+                    },
+                    options: { ...defaultChartOptions, scales: { y: { ...defaultChartOptions.scales.y, beginAtZero: true, title: { display: true, text: 'Bestandsindex', color: textColor } } } }
                 });
-
-                const result = await response.json();
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    outputDiv.innerHTML = `<p>${text}</p>`;
-                } else {
-                    outputDiv.innerHTML = '<p class="text-red-600">Fehler: Inhalt konnte nicht generiert werden. Bitte versuchen Sie es später erneut.</p>';
-                }
-            } catch (error) {
-                console.error('Error fetching from Gemini API:', error);
-                outputDiv.innerHTML = '<p class="text-red-600">Fehler: Verbindungsproblem oder API-Fehler. Bitte versuchen Sie es später erneut.</p>';
             }
-        }
-
-        function getInsight(section) {
-            let prompt = "";
-            let outputId = `${section}-insight`;
-            switch (section) {
-                case 'psychologie':
-                    prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept von 'unserem blinden Gehirn und der Normalisierung von Veränderungen' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";
-                    break;
-                case 'umwelt':
-                    prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept des 'Shifting Baseline Syndroms' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";
-                    break;
-                case 'kultur':
-                    prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept der 'Naturalisierung von Ideen' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";
-                    break;
-                case 'sprache':
-                    prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept der 'algorithmischen Filterblase' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";
-                    break;
-                case 'technologie':
-                    prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept der 'stillen Erosion von Berufen durch Technologie' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";
-                    break;
-                case 'wissen':
-                    prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept des 'Verlusts von Wissen' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";
-                    break;
+            
+            const perceptionCtx = document.getElementById('perceptionChart');
+            if (perceptionCtx) {
+                new Chart(perceptionCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: wrapLabel('Rückgang der Artenvielfalt'),
+                        datasets: [
+                            { label: 'Ältere Generation', data: [75], backgroundColor: accentColor },
+                            { label: 'Jüngere Generation', data: [50], backgroundColor: secondaryAccentColor }
+                        ]
+                    },
+                    options: { ...defaultChartOptions, scales: { y: { ...defaultChartOptions.scales.y, max: 100, title: { display: true, text: '% Wahrnehmung', color: textColor } } } }
+                });
             }
-            generateGeminiContent(prompt, outputId);
-        }
 
-        function getMoreWords() {
-            const prompt = "Nenne drei weitere deutsche Wörter, deren Bedeutung sich im Laufe der Zeit stark verändert hat, ähnlich wie 'Bauchpinseln', 'Kamelle' und 'Abkupfern'. Gib jeweils das Wort, die alte Bedeutung und die heutige Bedeutung an. Formatiere die Ausgabe als Liste von Wort: Früher -> Heute.";
-            generateGeminiContent(prompt, 'more-words-output');
-        }
+            const jobShiftCtx = document.getElementById('jobShiftChart');
+            if (jobShiftCtx) {
+                new Chart(jobShiftCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Sekretariat', 'Übersetzung', 'Fahrer', 'KI-Spezialist'],
+                        datasets: [{
+                            label: 'Bedarfsveränderung (Prognose)',
+                            data: [-50, -60, -40, 95],
+                            backgroundColor: (context) => context.raw >= 0 ? '#7EA172' : secondaryAccentColor,
+                        }]
+                    },
+                    options: { ...defaultChartOptions, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { title: { display: true, text: 'Relative Veränderung in %', color: textColor } } } }
+                });
+            }
 
-        function getReviveCustom() {
-            const prompt = "Schlage eine alte, lautlos verschwundene deutsche Tradition oder einen Brauch vor, der in einem modernen Kontext wiederbelebt werden könnte. Erkläre kurz, was es war und wie es heute angewendet werden könnte. Max. 150 Wörter.";
-            generateGeminiContent(prompt, 'revive-custom-output');
-        }
+            const knowledgeLossCtx = document.getElementById('knowledgeLossChart');
+            if (knowledgeLossCtx) {
+                new Chart(knowledgeLossCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Verlorenes Wissen', 'Überliefertes Wissen'],
+                        datasets: [{
+                            data: [90, 10],
+                            backgroundColor: [secondaryAccentColor, accentColor],
+                            borderColor: '#F8F7F2',
+                            borderWidth: 4
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: textColor } }, tooltip: { callbacks: { title: tooltipTitleCallback } } }, cutout: '60%' }
+                });
+            }
+
+            const wordData = [
+                { word: 'Bauchpinseln', old: 'Den Bauch eines Tieres streicheln.', new: 'Jemandem schmeicheln.' },
+                { word: 'Kamelle', old: 'Alte, wirkungslose Kamillenblüten.', new: 'Alte, oft erzählte Geschichten.' },
+                { word: 'Abkupfern', old: 'Exaktes Kopieren von Kunstwerken.', new: 'Ein Plagiat anfertigen.' },
+            ];
+
+            const wordTableContainer = document.getElementById('word-table-interactive');
+            if(wordTableContainer) {
+                wordData.forEach(item => {
+                    const el = document.createElement('div');
+                    el.className = 'border rounded-lg overflow-hidden';
+                    el.innerHTML = `
+                        <div class="p-3 font-bold cursor-pointer flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition">
+                            <span>${item.word}</span>
+                            <span class="transform transition-transform text-lg accent-color">+</span>
+                        </div>
+                        <div class="p-3 border-t border-gray-200 hidden text-sm bg-white">
+                            <p><strong>Früher:</strong> ${item.old}</p>
+                            <p><strong>Heute:</strong> ${item.new}</p>
+                        </div>
+                    `;
+                    wordTableContainer.appendChild(el);
+                    
+                    const header = el.querySelector('div:first-child');
+                    const content = el.querySelector('div:last-child');
+                    const icon = header.querySelector('span:last-child');
+                    
+                    header.addEventListener('click', () => {
+                        content.classList.toggle('hidden');
+                        icon.classList.toggle('rotate-45');
+                    });
+                });
+            }
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: '-50% 0px -50% 0px' });
+
+            sections.forEach(section => observer.observe(section));
+        });
     </script>
-</body>
 </html>
+</body>

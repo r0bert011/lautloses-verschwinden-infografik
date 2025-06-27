@@ -1,0 +1,571 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="de"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Infografik: Das lautlose Verschwinden&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 600px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-left: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-right: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 300px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 400px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@media (min-width: 768px) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>height: 350px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.text-shadow {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-shadow: 2px 2px 4px rgba(0,0,0,0.4);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.loading-spinner {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 4px solid rgba(0, 0, 0, 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-left-color: #58508d;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: spin 1s linear infinite;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes spin {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>to { transform: rotate(360deg); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-gray-100 text-gray-800"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="min-h-screen bg-cover bg-fixed bg-center" style="background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2071&amp;q=80');"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="min-h-screen bg-black bg-opacity-60 flex flex-col justify-center items-center p-8 text-white"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-5xl md:text-7xl font-black mb-4 text-center text-shadow"&gt;Das lautlose Verschwinden&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-xl md:text-2xl text-center max-w-3xl text-shadow"&gt;Eine visuelle Analyse unbemerkter Transformationen in Gesellschaft, Kultur und Umwelt.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="container mx-auto p-4 md:p-8"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="psychologie" class="my-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;"&gt;Die Wurzel des Unbemerkten: Unser blindes Gehirn&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="max-w-3xl mx-auto text-center mb-12 text-lg"&gt;Unsere Wahrnehmung ist keine exakte Kopie der Realität. Das Gehirn füllt aktiv Lücken, normalisiert graduelle Veränderungen und schafft eine kohärente Welt, die uns oft blind macht für das, was langsam und leise verloren geht. Dieser kognitive Mechanismus ist die Grundlage für das Phänomen des unbemerkten Verschwindens.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white rounded-lg shadow-xl p-8 flex flex-col md:flex-row items-center justify-center gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex-1 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-4" style="color: #58508d;"&gt;Das Prinzip der „Auffüllung“&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p&gt;Genau wie unser Gehirn den blinden Fleck im Auge nahtlos füllt, sodass wir kein Loch in unserem Sichtfeld sehen, kompensiert es auch langsam erodierende ökologische oder kulturelle Baselines. Wir bemerken den Verlust nicht, weil unsere Wahrnehmung darauf optimiert ist, eine stabile Realität zu konstruieren, nicht um subtile Verluste zu protokollieren.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex-1 flex justify-center items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="relative w-64 h-64"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="absolute inset-0 border-4 border-dashed border-gray-300 rounded-full"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="absolute w-full h-full animate-spin-slow flex justify-center items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div class="w-8 h-8 rounded-full" style="background-color: #ff6361; transform: translate(0, -110px);"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div class="w-8 h-8 rounded-full" style="background-color: #ffa600; transform: translate(110px, 0);"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div class="w-8 h-8 rounded-full" style="background-color: #bc5090; transform: translate(0, 110px);"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="absolute inset-10 bg-white rounded-full flex justify-center items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-5xl font-bold" style="color: #003f5c;"&gt;?&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;div class="absolute w-8 h-8 rounded-full bg-gray-300" style="left: 50%; top:50%; transform: translate(-50%, -50%) translate(-110px, 0);"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="mt-8 mx-auto block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('psychologie')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Erweiterter Einblick ✨</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="psychologie-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="umwelt" class="my-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;"&gt;Die erodierende Erde: Das Shifting Baseline Syndrom&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="max-w-3xl mx-auto text-center mb-12 text-lg"&gt;Jede neue Generation akzeptiert eine degradierte Umwelt als „normal“. Die Erinnerung an eine reichere, gesündere Natur verblasst, und mit ihr unser Maßstab für das, was wir verloren haben. Dieses Phänomen ist eine der greifbarsten Formen des lautlosen Verschwindens.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-lg shadow-xl p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-2 text-center" style="color: #58508d;"&gt;Generationen-Amnesie: Fischbestände&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-center mb-4 text-sm"&gt;Ältere Generationen erinnern sich an eine Fülle, die für Jüngere unvorstellbar ist. Die „Baseline“ für einen gesunden Fischbestand verschiebt sich mit jeder Generation nach unten.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;canvas id="shiftingBaselineChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-center items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-2 text-center" style="color: #58508d;"&gt;Funktionell ausgestorben&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-center mb-4 text-sm"&gt;Ein dramatisches Beispiel für eine verschobene Wahrnehmung: Die Bisons wurden aus fast ihrem gesamten Lebensraum verdrängt, doch ihre Rettung vor der kompletten Ausrottung wird heute als großer Erfolg gefeiert.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-8xl font-black" style="color: #ff6361;"&gt;98%&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-lg font-bold"&gt;ihres historischen Verbreitungsgebiets haben die Bisons in Nordamerika verloren.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="md:col-span-2 bg-white rounded-lg shadow-xl p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-2 text-center" style="color: #58508d;"&gt;Wahrnehmung von Wandel&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;p class="text-center mb-4 text-sm"&gt;Studien zeigen, dass ältere Generationen, die mehr Veränderungen miterlebt haben, Umweltprobleme wie den Klimawandel signifikant stärker wahrnehmen als jüngere Generationen.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="chart-container h-80 max-h-80"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;canvas id="perceptionChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="mt-8 mx-auto block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('umwelt')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Erweiterter Einblick ✨</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="umwelt-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="kultur" class="my-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;"&gt;Verblassende Bräuche &amp; Konzepte&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="max-w-3xl mx-auto text-center mb-12 text-lg"&gt;Kulturelle Praktiken, soziale Normen und sogar grundlegende gesellschaftliche Ideen können leise verschwinden. Sie verlieren ihre Relevanz, werden durch neue ersetzt oder als so „natürlich“ angesehen, dass Alternativen undenkbar werden.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-lg shadow-xl p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold text-center mb-6" style="color: #58508d;"&gt;Die stille Ablösung der Tradition&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-center mb-6 text-sm"&gt;Historische Bräuche verschwinden nicht plötzlich. Ihre soziale Funktion erodiert langsam, bis die Praxis selbst nur noch eine leere Hülle ist, die stillschweigend aufgegeben wird.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="relative pl-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="absolute left-4 top-0 bottom-0 w-1 bg-gray-200 rounded"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="mb-8 relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="absolute left-[-22px] top-1 w-6 h-6 rounded-full" style="background-color: #bc5090;"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-lg"&gt;Gemeinschaftsrituale&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm"&gt;Bräuche wie das „Kalkspur-Legen“, die soziale Normen regelten, verloren mit der Veränderung von Partnerschaftsidealen ihre Berechtigung und verschwanden.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="mb-8 relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="absolute left-[-22px] top-1 w-6 h-6 rounded-full" style="background-color: #ff6361;"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-lg"&gt;Weihnachtssymbole&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm"&gt;Die Weihnachtskrippe wurde über Jahrzehnte langsam durch den Christbaum als zentrales Symbol im häuslichen Weihnachtsfest abgelöst.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;div class="absolute left-[-22px] top-1 w-6 h-6 rounded-full" style="background-color: #ffa600;"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-lg"&gt;Importierte Bräuche&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm"&gt;Neue Bräuche wie der Valentinstag haben es schwer, sich zu etablieren, da ihnen die tief verwurzelte, über Generationen gewachsene Bedeutung fehlt.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="bg-white rounded-lg shadow-xl p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold text-center mb-6" style="color: #58508d;"&gt;Die Naturalisierung von Ideen&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-center mb-6 text-sm"&gt;Wenn ein soziales Konstrukt als „natürlich“ gilt, verschwinden alternative Denkweisen unbemerkt aus dem kollektiven Bewusstsein.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-center p-4 border-4 border-dashed rounded-lg" style="border-color: #003f5c;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;p class="font-bold mb-2"&gt;Gesellschaftliche Realität&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="p-4 bg-gray-200 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p class="font-bold mb-2 text-gray-700"&gt;Akzeptierte Norm (z.B. binäres Geschlechtermodell)&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div class="p-4 rounded-lg" style="background-color: #003f5c; color: white;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="font-bold"&gt;„Das ist natürlich!“&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div class="p-4 mt-2 bg-red-100 text-red-800 rounded-lg opacity-30"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="font-bold line-through"&gt;Alternative Möglichkeiten &amp; historische Vielfalt&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="text-xs"&gt;(werden unsichtbar gemacht)&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex justify-center gap-4 mt-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('kultur')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Erweiterter Einblick ✨</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getReviveCustom()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Brauch wiederbeleben ✨</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="kultur-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="revive-custom-output" class="mt-4 p-4 bg-green-50 rounded-lg border border-green-200 text-green-900 hidden"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="sprache" class="my-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;"&gt;Wenn Worte verstummen&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="max-w-3xl mx-auto text-center mb-12 text-lg"&gt;Sprache ist im stetigen Wandel. Wörter verlieren ihre ursprüngliche Bedeutung oder verschwinden ganz aus unserem Wortschatz. Gleichzeitig filtern digitale Medien unsere Informationswelt und lassen vielfältige Perspektiven unbemerkt verschwinden.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-lg shadow-xl p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-4 text-center" style="color: #58508d;"&gt;Der Wandel der Wörter&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="overflow-x-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;table class="w-full text-sm text-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;thead class="text-xs text-gray-700 uppercase bg-gray-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;th scope="col" class="px-4 py-2"&gt;Wort&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;th scope="col" class="px-4 py-2"&gt;Früher&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;th scope="col" class="px-4 py-2"&gt;Heute&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;tr class="bg-white border-b"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-4 py-2 font-medium"&gt;Bauchpinseln&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-4 py-2"&gt;Bauch eines Tieres streicheln&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-4 py-2"&gt;Jemandem schmeicheln&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;tr class="bg-gray-50 border-b"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-4 py-2 font-medium"&gt;Kamelle&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-4 py-2"&gt;Alte Kamillenblüten&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-4 py-2"&gt;Alte, oft erzählte Geschichten&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;tr class="bg-white border-b"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-4 py-2 font-medium"&gt;Abkupfern&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-4 py-2"&gt;Kunstwerk exakt kopieren&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-4 py-2"&gt;Ein Plagiat anfertigen&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-lg shadow-xl p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-4 text-center" style="color: #58508d;"&gt;Die algorithmische Filterblase&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-center mb-4 text-sm"&gt;Soziale Medien und Suchmaschinen personalisieren unseren Informationsfluss. Was nicht zu unserem Profil passt, wird unsichtbar – und wir bemerken das Verschwinden der Meinungsvielfalt nicht.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="font-bold"&gt;Gesamte Information&lt;/span&gt;&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span style="font-size: 2rem; line-height: 1;"&gt;🌍&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="w-2 h-8" style="background-color: #003f5c;"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="p-3 rounded-lg border-2 border-dashed w-full text-center" style="border-color: #ff6361;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="font-bold"&gt;Algorithmische Filter&lt;/span&gt;&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xs"&gt;(Personalisierung, Engagement)&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="w-2 h-8" style="background-color: #003f5c;"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;div class="p-3 rounded-full text-center" style="background-color: #bc5090; color: white;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;span class="font-bold"&gt;Deine persönliche Echokammer&lt;/span&gt;&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;span style="font-size: 2rem; line-height: 1;"&gt;👤&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex justify-center gap-4 mt-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('sprache')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Erweiterter Einblick ✨</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="block bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getMoreWords()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Weitere Wortwandlungen ✨</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="sprache-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="more-words-output" class="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200 text-yellow-900 hidden"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="technologie" class="my-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;"&gt;Geister der Technik &amp; Arbeit&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="max-w-3xl mx-auto text-center mb-12 text-lg"&gt;Der technologische Fortschritt ist ein Motor des stillen Verschwindens. Alltagsgegenstände werden obsolet und ganze Berufsbilder erodieren langsam durch Automatisierung und KI, oft ohne dass wir den strukturellen Wandel bemerken.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="md:col-span-2 bg-white rounded-lg shadow-xl p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-4 text-center" style="color: #58508d;"&gt;Friedhof der Alltagsgegenstände&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;p class="text-center mb-6 text-sm"&gt;Erinnern Sie sich an diese Geräusche und Handgriffe? Sie sind leise aus unserem Alltag verschwunden, ersetzt durch effizientere, stillere Technologien.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex justify-around items-center text-5xl md:text-7xl text-center flex-wrap gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div style="color: #003f5c;"&gt;📼&lt;p class="text-sm font-bold"&gt;Bandsalat&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div style="color: #58508d;"&gt;📞&lt;p class="text-sm font-bold"&gt;Wählscheibe&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div style="color: #bc5090;"&gt;💾&lt;p class="text-sm font-bold"&gt;Diskette&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div style="color: #ff6361;"&gt;☎️&lt;p class="text-sm font-bold"&gt;Telefonzelle&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div style="color: #ffa600;"&gt;📠&lt;p class="text-sm font-bold"&gt;Modemgeräusch&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="md:col-span-2 bg-white rounded-lg shadow-xl p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-2 text-center" style="color: #58508d;"&gt;Die stille Erosion der Berufe&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-center mb-4 text-sm"&gt;Automatisierung ersetzt nicht über Nacht ganze Berufsstände, sondern übernimmt schleichend einzelne Aufgaben. Der Bedarf an bestimmten menschlichen Tätigkeiten sinkt graduell, bis ganze Berufsbilder unbemerkt verschwunden sind.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="chart-container h-96 max-h-96"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;canvas id="jobShiftChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="mt-8 mx-auto block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('technologie')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Erweiterter Einblick ✨</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="technologie-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="wissen" class="my-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-4xl font-bold text-center mb-4" style="color: #003f5c;"&gt;Verlorene Archive &amp; vergessene Ideen&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="max-w-3xl mx-auto text-center mb-12 text-lg"&gt;Die vielleicht tiefgreifendste Form des Verschwindens ist der Verlust von Wissen. Ganze Bibliotheken der Antike sind verloren, einflussreiche Theorien geraten in Vergessenheit und unsere intellektuelle „Baseline“ sinkt, ohne dass wir wissen, was wir nicht mehr wissen.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-lg shadow-xl p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-2 text-center" style="color: #58508d;"&gt;Die Asche der Antike&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-center mb-4 text-sm"&gt;Ein unvorstellbarer Schatz an Literatur, Wissenschaft und Philosophie ging in der Spätantike verloren. Wir kennen heute nur einen winzigen Bruchteil des antiken Wissens.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="chart-container h-80 max-h-80"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;canvas id="knowledgeLossChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-center items-center text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-4" style="color: #58508d;"&gt;Vergessene Vordenker&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="mb-4"&gt;Ideen verschwinden nicht, weil sie schlecht sind, sondern weil sie von dominanten Narrativen überschattet oder aktiv marginalisiert werden.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="p-4 rounded-lg border" style="border-color: #ff6361;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold"&gt;Walter Lippmann&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm"&gt;Seine Ideen zur medialen Konstruktion der Realität („Pseudo-Umwelt“) sind heute weitgehend unbekannt.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="p-4 rounded-lg border" style="border-color: #ffa600;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold"&gt;Die Saint-Simonistinnen&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p class="text-sm"&gt;Eine frühe autonome Frauenbewegung des 19. Jh., die für finanzielle Unabhängigkeit kämpfte und von Marx als „utopisch“ abgetan wurde.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="mt-8 mx-auto block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300" onclick="getInsight('wissen')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Erweiterter Einblick ✨</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="wissen-insight" class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-blue-900 hidden"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="bg-gray-800 text-white p-12 mt-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container mx-auto text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-3xl font-bold mb-4"&gt;Das Unsichtbare sichtbar machen&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="max-w-2xl mx-auto mb-6"&gt;Das lautlose Verschwinden ist kein Schicksal. Es ist die Summe kleiner, unbemerkter Veränderungen. Indem wir lernen, genauer hinzusehen, unser kollektives Gedächtnis pflegen und unsere Wahrnehmung schärfen, können wir den stillen Erosionen entgegenwirken.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex justify-center gap-8 font-bold text-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span style="color: #bc5090;"&gt;Beobachten.&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span style="color: #ff6361;"&gt;Erinnern.&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span style="color: #ffa600;"&gt;Handeln.&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const vibrantPalette = ['#003f5c', '#58508d', '#bc5090', '#ff6361', '#ffa600'];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const wrapLabel = (str, maxWidth) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (str.length &lt;= maxWidth) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return str;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const words = str.split(' ');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let lines = [];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let currentLine = words[0];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>for (let i = 1; i &lt; words.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (currentLine.length + words[i].length + 1 &lt; maxWidth) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>currentLine += ' ' + words[i];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>lines.push(currentLine);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>currentLine = words[i];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>lines.push(currentLine);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return lines;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const tooltipTitleCallback = (tooltipItems) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const item = tooltipItems[0];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let label = item.chart.data.labels[item.dataIndex];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (Array.isArray(label)) {</p>
+<p class="p1"><span class="Apple-converted-space">              </span>return label.join(' ');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">              </span>return label;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const defaultChartOptions = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>legend: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>position: 'top',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tooltip: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>callbacks: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>title: tooltipTitleCallback</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const sbsCtx = document.getElementById('shiftingBaselineChart');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (sbsCtx) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>new Chart(sbsCtx, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'line',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: ['1950er', '1980er', '2010er', 'Heute'],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>datasets: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: 'Tatsächlicher Fischbestand',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>data: [100, 60, 30, 20],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>borderColor: vibrantPalette[0],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>backgroundColor: vibrantPalette[0] + '33',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>fill: true,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>tension: 0.1</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: 'Wahrgenommene "Normale" Baseline',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>data: [100, 100, 60, 30],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>borderColor: vibrantPalette[3],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>borderDash: [5, 5],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>fill: false</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>options: { ...defaultChartOptions,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>y: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>beginAtZero: true,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>title: { display: true, text: 'Bestandsindex' }</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const perceptionCtx = document.getElementById('perceptionChart');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (perceptionCtx) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>new Chart(perceptionCtx, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'bar',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: ['Erhöhte Temperaturen', 'Verringerte Schneedecke', 'Rückgang der Artenvielfalt'],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>datasets: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: 'Wahrnehmung Älterer Generationen',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>data: [90, 85, 75],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>backgroundColor: vibrantPalette[1],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: 'Wahrnehmung Jüngerer Generationen',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>data: [65, 55, 50],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>backgroundColor: vibrantPalette[2],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>options: { ...defaultChartOptions,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>y: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>beginAtZero: true,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>max: 100,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>title: { display: true, text: '% der Befragten, die Veränderung bemerken' }</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const jobShiftCtx = document.getElementById('jobShiftChart');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (jobShiftCtx) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const originalLabels = ['Sekretariat &amp; Verwaltung', 'Übersetzung &amp; Recherche', 'Fertigung &amp; Routinearbeit', 'Transport &amp; Logistik', 'KI &amp; Automatisierungs-Spezialisten'];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>new Chart(jobShiftCtx, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'bar',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: originalLabels.map(l =&gt; wrapLabel(l, 16)),</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>datasets: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: 'Bedarf 2020',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>data: [80, 70, 90, 85, 20],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>backgroundColor: vibrantPalette[0],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: 'Prognose 2035',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>data: [30, 20, 40, 50, 95],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>backgroundColor: vibrantPalette[4],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>options: { ...defaultChartOptions,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>indexAxis: 'y',</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>x: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>title: { display: true, text: 'Relativer Bedarf an Arbeitskräften' }</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const knowledgeLossCtx = document.getElementById('knowledgeLossChart');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(knowledgeLossCtx) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>new Chart(knowledgeLossCtx, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'doughnut',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: ['Verlorenes Wissen der Antike', 'Überliefertes Wissen'],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>data: [90, 10],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>backgroundColor: [</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>vibrantPalette[3],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>vibrantPalette[0],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderColor: '#fff',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderWidth: 4</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>options: { ...defaultChartOptions,</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>cutout: '60%',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function generateGeminiContent(prompt, outputElementId) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const outputDiv = document.getElementById(outputElementId);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>outputDiv.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>outputDiv.innerHTML = '&lt;div class="flex items-center justify-center p-4"&gt;&lt;div class="loading-spinner"&gt;&lt;/div&gt;&lt;span class="ml-2 text-gray-700"&gt;Inhalt wird generiert...&lt;/span&gt;&lt;/div&gt;';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let chatHistory = [];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>chatHistory.push({ role: "user", parts: [{ text: prompt }] });</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const payload = { contents: chatHistory };</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const apiKey = "";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const response = await fetch(apiUrl, {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>method: 'POST',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>headers: { 'Content-Type': 'application/json' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>body: JSON.stringify(payload)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const result = await response.json();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (result.candidates &amp;&amp; result.candidates.length &gt; 0 &amp;&amp;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>result.candidates[0].content &amp;&amp; result.candidates[0].content.parts &amp;&amp;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>result.candidates[0].content.parts.length &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const text = result.candidates[0].content.parts[0].text;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>outputDiv.innerHTML = `&lt;p&gt;${text}&lt;/p&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>outputDiv.innerHTML = '&lt;p class="text-red-600"&gt;Fehler: Inhalt konnte nicht generiert werden. Bitte versuchen Sie es später erneut.&lt;/p&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error('Error fetching from Gemini API:', error);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>outputDiv.innerHTML = '&lt;p class="text-red-600"&gt;Fehler: Verbindungsproblem oder API-Fehler. Bitte versuchen Sie es später erneut.&lt;/p&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getInsight(section) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let prompt = "";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let outputId = `${section}-insight`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>switch (section) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'psychologie':</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept von 'unserem blinden Gehirn und der Normalisierung von Veränderungen' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'umwelt':</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept des 'Shifting Baseline Syndroms' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'kultur':</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept der 'Naturalisierung von Ideen' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'sprache':</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept der 'algorithmischen Filterblase' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'technologie':</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept der 'stillen Erosion von Berufen durch Technologie' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'wissen':</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>prompt = "Gib einen kurzen, zusätzlichen Einblick in das Konzept des 'Verlusts von Wissen' im Kontext des 'lautlosen Verschwindens'. Bleibe prägnant und nenne ein weiteres, kurzes Beispiel, das nicht bereits im Infotext vorkommt. Max. 100 Wörter.";</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>break;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>generateGeminiContent(prompt, outputId);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getMoreWords() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const prompt = "Nenne drei weitere deutsche Wörter, deren Bedeutung sich im Laufe der Zeit stark verändert hat, ähnlich wie 'Bauchpinseln', 'Kamelle' und 'Abkupfern'. Gib jeweils das Wort, die alte Bedeutung und die heutige Bedeutung an. Formatiere die Ausgabe als Liste von Wort: Früher -&gt; Heute.";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>generateGeminiContent(prompt, 'more-words-output');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getReviveCustom() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const prompt = "Schlage eine alte, lautlos verschwundene deutsche Tradition oder einen Brauch vor, der in einem modernen Kontext wiederbelebt werden könnte. Erkläre kurz, was es war und wie es heute angewendet werden könnte. Max. 150 Wörter.";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>generateGeminiContent(prompt, 'revive-custom-output');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
